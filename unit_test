@@ -1,0 +1,60 @@
+import numpy as np
+import sys
+
+def fillLevels(current_subdivision, table, levels_descr):
+    ## WARNING: the last columns will be use to write the type code.
+    nb_rows = table.shape[0]
+    total_subdivision = current_subdivision
+    for level in levels_descr[1]:
+        total_subdivision *= len(level)
+
+    if nb_rows % total_subdivision != 0:
+        print "The number of rows has to be a multiple of the total number of subdivision:"
+        print "Subdivisions par levels:", "*".join([str(len(l)) for l in levels_descr[1]]), "=", total_subdivision
+        print "Number of row of the provided table:", nb_rows
+        print "The table won't be created and the program will quit!"; sys.exit(0)
+
+    condition = 0
+    for index, LEVEL in zip(levels_descr[0], levels_descr[1]):
+        nb_factor = len(LEVEL)
+        repeat_factor = nb_rows/current_subdivision/nb_factor # we have two sublevel: short Gap and long Gap
+        if isinstance(LEVEL[0], list) or isinstance(LEVEL[0], tuple):
+            buffer = []
+            for parameter_set in LEVEL:
+                buffer.append(np.random.uniform(parameter_set[0]-parameter_set[1], parameter_set[0]+parameter_set[1], repeat_factor))
+            buffer = np.concatenate(buffer, axis=1)
+            ## the fourth last line would be simply np.repeat(LEVEL) if they were not random.
+        else: ## cross the finger to be a number (float, int, etc...)
+            buffer = np.repeat(LEVEL, repeat_factor)
+        print condition
+        type_code = np.repeat(np.arange(len(LEVEL))+1, repeat_factor)*(10**condition) ## that's kind of dirty to use the decimal system for coding the trial type.
+        buffer = np.tile(buffer, current_subdivision)
+        type_code = np.tile(type_code, current_subdivision)
+        table[:, index] = buffer ## the 9th columns (fixation gap) is
+        table[:, -1] += type_code
+        current_subdivision *= nb_factor
+        condition += 1
+    return table
+
+ECCENTRICITY = 13.5
+FIXATION_DURATION = (80, 30) ## 800 +- 300 ms
+FIXATION_DURATION_LEVELS = [FIXATION_DURATION]
+GAP_DURATION_SHORT = (20, 1) ## 200 +- 100 ms
+GAP_DURATION_LONG = (50, 1) ## 500 +- 100 ms
+GAP_LEVELS = [GAP_DURATION_SHORT, GAP_DURATION_LONG]
+STIMULUS1_DOUBLEDURATION_SHORT = (35, 1) ## 350 +- 100 ms
+STIMULUS1_DOUBLEDURATION_LONG = (65, 1) ## 650 +- 100 ms
+S1_LEVELS = [STIMULUS1_DOUBLEDURATION_SHORT, STIMULUS1_DOUBLEDURATION_LONG]
+POSITION_CONTROL_LEVELS = [-30, 30]
+POSITION_EXP_LEVELS = [-30, 30, 150, -150]
+## the first list give us which columns will be filled, the second list gives how this columns should be filled (levels).
+CONTROL_LEVELS = [[3, -5, -4, -3],[POSITION_CONTROL_LEVELS, FIXATION_DURATION_LEVELS, GAP_LEVELS, S1_LEVELS]]
+EXP_LEVELS = [[3, -5, -4, -3],[ POSITION_EXP_LEVELS, FIXATION_DURATION_LEVELS, GAP_LEVELS, S1_LEVELS]]
+
+
+
+control_trials = np.tile((0, 0, ECCENTRICITY, 0 , -1, -1, -1, 0, 0, 0, 0, 0), (16, 1))
+new_table = fillLevels(1, control_trials, CONTROL_LEVELS)
+
+import pandas as pd
+print pd.DataFrame(new_table, columns = ["ID", "type", "tar_ecc", "tar_dir", "S2_ecc", "S2_dir", "distance", "Fix_dur", "gap_dur", "S1_dur", "S2_dur", "Type_Code"])

@@ -1,0 +1,12 @@
+*.pyc
+*.psproj
+*.svg
+*.png
+trash/
+psyutil/
+*.csv
+*.DATA
+*.EDF
+*.ffs_db
+*.jpg
+*.jpeg

@@ -1,0 +1,18 @@
+When a trial starts, a fixation cross appears.
+Stare at the fixation cross.
+Then, press the space bar to confirm you're fixating the cross.
+
+A red target will appear on the screen,
+You have to make a fast eye movement to it.
+
+Sometimes a second red target will appear,
+You have to make a second fast eye movement to it.
+
+Then a fixation cross will reappear. 
+A new trial have started.
+
+Be the most precise and fast you can.
+
+
+PRESS ANY BUTTON WHEN READY TO START ...
+

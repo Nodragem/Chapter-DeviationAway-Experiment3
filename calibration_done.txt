@@ -1,0 +1,4 @@
+'''Calibration done'''
+   
+- Press SPACE to go on
+- Press R to Recalibrate
