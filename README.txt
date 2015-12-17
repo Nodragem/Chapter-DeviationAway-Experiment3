@@ -1,3 +1,5 @@
+Experiment 2 (appendix) of the Chapter on Deviation Away from a previously fixated stimulus.
+
 We basically used the program for the experiment on the extent of the Global Effect.
 The main difference is that the fixation cross does not disappear automatically,
 The participant need to press the space_bar to confirm he's fixating, then the trial starts after a random time.
