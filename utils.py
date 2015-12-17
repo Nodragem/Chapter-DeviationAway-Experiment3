@@ -34,7 +34,7 @@ CONTROL_LEVELS = [[3, -5, -4], [POSITION_CONTROL_LEVELS, FIXATION_DURATION_LEVEL
 SINGLE_LEVELS = [[3, -5, -4], [ POSITION_EXP_LEVELS, FIXATION_DURATION_LEVELS, GAP_LEVELS]]
 DOUBLE_LEVELS = [[3, -5, -4, -3],[ POSITION_EXP_LEVELS, FIXATION_DURATION_LEVELS, GAP_LEVELS, S1_LEVELS]]
 
-# example of type_code = 1213 :
+# example of type_code (TRIAL_CODE) = 1213 :
 # -- Position level = 3 => 150
 # -- Fixation duration level = 1 => (80,30)
 # -- Gap duration level = 2 => (40,10)
